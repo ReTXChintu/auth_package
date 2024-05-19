@@ -1,0 +1,28 @@
+{
+  "userSchema": {
+    "name": {
+      "type": "String",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 50
+    },
+    "email": {
+      "type": "String",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 50
+    },
+    "password": {
+      "type": "String",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 50
+    },
+    "username": {
+      "type": "String",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 50
+    }
+  }
+}
