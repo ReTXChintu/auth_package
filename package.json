@@ -1,8 +1,8 @@
 {
   "name": "@an_average_coder/auth_package",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "login and signup feature",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "npx jest"
   },
