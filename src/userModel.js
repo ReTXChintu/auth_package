@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 const schemaConfig = require("./schemaConfig.json");
+
+const SALT_ROUNDS = schemaConfig.saltRounds;
 
 const createUserSchema = (config) => {
   const schemaDefinition = {};
@@ -21,4 +24,21 @@ const createUserSchema = (config) => {
 };
 
 const userSchema = createUserSchema(schemaConfig);
+
+// Add pre-save hook to hash password
+userSchema.pre("save", async function (next) {
+  const user = this;
+  if (user.isModified("password")) {
+    try {
+      const salt = await bcrypt.genSalt(SALT_ROUNDS);
+      user.password = await bcrypt.hash(user.password, salt);
+      next();
+    } catch (error) {
+      next(error);
+    }
+  } else {
+    next();
+  }
+});
+
 module.exports = mongoose.model("User", userSchema);

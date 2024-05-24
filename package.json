@@ -4,7 +4,8 @@
   "description": "login and signup feature",
   "main": "src/index.js",
   "scripts": {
-    "test": "npx jest"
+    "test": "npx jest",
+    "release": "standard-version"
   },
   "author": "Biswajit Panda",
   "license": "ISC",
@@ -16,6 +17,7 @@
   },
   "devDependencies": {
     "jest": "^29.7.0",
+    "standard-version": "^9.5.0",
     "supertest": "^7.0.0"
   }
 }
