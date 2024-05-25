@@ -26,7 +26,7 @@ const createUserSchema = (config) => {
     type: String,
     required: false,
   };
-  return new mongoose.Schema(schemaDefinition);
+  return new mongoose.Schema(schemaDefinition, { timestamps: true });
 };
 
 const userSchema = createUserSchema(schemaConfig);

@@ -18,14 +18,15 @@ npm install @an_average_coder/auth_package
 
 ### Create a configs.json file to define your user schema fields:
 
+```bash
 {
-"userSchema": {
-"username": { "type": "String", "required": true },
-"password": { "type": "String", "required": true },
-"email": { "type": "String", "required": false },
-"age": { "type": "Number", "required": false },
-"createdAt": { "type": "Date", "default": "Date.now" }
-},
+    "userSchema": {
+        "username": { "type": "String", "required": true },
+        "password": { "type": "String", "required": true },
+        "email": { "type": "String", "required": false },
+        "age": { "type": "Number", "required": false },
+        "createdAt": { "type": "Date", "default": "Date.now" }
+    },
 
     "saltRounds": 10,
 
@@ -36,6 +37,7 @@ npm install @an_average_coder/auth_package
     }
 
 }
+```
 
 ### Set up environment variables in a .env file:
 
