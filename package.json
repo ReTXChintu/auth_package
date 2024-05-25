@@ -1,6 +1,6 @@
 {
   "name": "@an_average_coder/auth_package",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "login and signup feature",
   "main": "src/index.js",
   "scripts": {
