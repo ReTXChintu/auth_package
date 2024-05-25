@@ -1,11 +1,11 @@
 {
   "name": "@an_average_coder/auth_package",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "login and signup feature",
   "main": "src/index.js",
   "scripts": {
     "test": "npx jest",
-    "release": "standard-version --release-as minor"
+    "release": "standard-version"
   },
   "repository": {
     "type": "git",

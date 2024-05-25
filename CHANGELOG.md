@@ -2,16 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/ReTXChintu/auth_package/compare/v1.1.0...v1.1.1) (2024-05-25)
+
 ## [1.1.0](https://github.com/ReTXChintu/auth_package/compare/v1.0.4...v1.1.0) (2024-05-25)
 
+## [1.1.1] - 2025-05-25
+### Changed
+- Added timeStamps to userSchema
+
 ## [1.1.0] - 2025-05-25
-## Fixed
+### Fixed
 - Fixed issue with jwt.sign()
 
-## Changed
+### Changed
 - Used [api_response_formatter](https://www.npmjs.com/package/api_response_formatter) package for sending responses
 
-## Added 
+### Added 
 - Added middleware for authenticating JWT
 - Exported UserSchema as User
 
