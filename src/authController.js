@@ -20,7 +20,7 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { username, password } = req.body;
-    const user = await User.findOne({ username }).select("-password");
+    const user = await User.findOne({ username });
     if (!user) {
       ApiResponse.error(res, "User not found", 404, []);
     }
@@ -28,8 +28,8 @@ const login = async (req, res) => {
     if (!isMatch) {
       ApiResponse.error(res, "Invalid Credentials", 400, []);
     }
-    const accessToken = await User.generateAccessToken();
-    const refreshToken = await User.generateRefreshToken();
+    const accessToken = await user.generateAccessToken();
+    const refreshToken = await user.generateRefreshToken();
     res.cookie("accessToken", accessToken, { ...configs.cookieConfig });
     res.cookie("refreshToken", refreshToken, { ...configs.cookieConfig });
     ApiResponse.success(res, user, "Logged in successfully", 200);

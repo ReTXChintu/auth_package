@@ -41,11 +41,13 @@ npm install @an_average_coder/auth_package
 
 ### Set up environment variables in a .env file:
 
+```
 - MONGO_URI=your_mongo_db_uri
 - ACCESS_TOKEN_SECRET="your_secret",
 - REFRESH_TOKEN_SECRET="your_refresh_token_secret",
 - ACCESS_TOKEN_EXPIRY="1h",
 - REFRESH_TOKEN_EXPIRY="7d"
+```
 
 ## Usage
 
@@ -53,6 +55,7 @@ Here's an example of how to use this package in your MERN stack project:
 
 ### Setup Express App
 
+```bash
 const express = require('express');
 const authSystem = require('@an_average_coder/auth_package');
 require('dotenv').config();
@@ -67,13 +70,13 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
 console.log(`Server is running on port ${PORT}`);
 });
-
-- Define Signup and Login Routes
+```
 
 ### Signup
 
 Send a POST request to /auth/signup with the following JSON body:
 
+```bash
 {
 "firstName": "Test",
 "lastName", "User"
@@ -82,15 +85,18 @@ Send a POST request to /auth/signup with the following JSON body:
 "email": "test@example.com",
 "age": 30
 }
+```
 
 ### Login
 
 Send a POST request to /auth/login with the following JSON body:
 
+```bash
 {
 "username": "testuser",
 "password": "testpassword"
 }
+```
 
 ### Protecting Routes using Middleware
 
@@ -121,7 +127,9 @@ app.listen(PORT, () => {
 
 To run tests, use the following command:
 
+```bash
 - npx jest
+```
 
 ## Changelog
 
