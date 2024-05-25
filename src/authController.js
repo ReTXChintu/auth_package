@@ -1,13 +1,11 @@
 const User = require("./userModel");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("./config");
 
 const signup = async (req, res) => {
   try {
     const { username, password, ...rest } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ username, password: hashedPassword, ...rest });
+    const newUser = new User({ username, password, ...rest });
     await newUser.save();
     res.status(201).send({ message: "User created successfully" });
   } catch (error) {

@@ -6,13 +6,10 @@ const config = require("./config");
 const app = express();
 
 app.use(express.json());
-app.use("/auth", authRoutes);
+app.use("/", authRoutes);
 
 mongoose
-  .connect(config.mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(config.mongoURI)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
