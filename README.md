@@ -12,11 +12,11 @@ A flexible and dynamic authentication system for MERN stack applications. This p
 
 ## Installation
 
-npm install <your-package-name>
+npm install @an_average_coder/auth_package
 
 ## Configuration
 
-### Create a schemaConfig.json file to define your user schema fields:
+### Create a configs.json file to define your user schema fields:
 
 {
 "userSchema": {
@@ -25,13 +25,25 @@ npm install <your-package-name>
 "email": { "type": "String", "required": false },
 "age": { "type": "Number", "required": false },
 "createdAt": { "type": "Date", "default": "Date.now" }
-}
+},
+
+    "saltRounds": 10,
+
+    "cookieConfig": {
+        "httpOnly": true,
+        "secure": false,
+        "maxAge": "1000 * 60 * 60 * 24 * 7"
+    }
+
 }
 
 ### Set up environment variables in a .env file:
 
 - MONGO_URI=your_mongo_db_uri
-- JWT_SECRET=your_jwt_secret
+- ACCESS_TOKEN_SECRET="your_secret",
+- REFRESH_TOKEN_SECRET="your_refresh_token_secret",
+- ACCESS_TOKEN_EXPIRY="1h",
+- REFRESH_TOKEN_EXPIRY="7d"
 
 ## Usage
 
@@ -61,6 +73,8 @@ console.log(`Server is running on port ${PORT}`);
 Send a POST request to /auth/signup with the following JSON body:
 
 {
+"firstName": "Test",
+"lastName", "User"
 "username": "testuser",
 "password": "testpassword",
 "email": "test@example.com",
@@ -76,6 +90,31 @@ Send a POST request to /auth/login with the following JSON body:
 "password": "testpassword"
 }
 
+### Protecting Routes using Middleware
+
+```bash
+const express = require('express');
+const authSystem = require('@an_average_coder/auth_package');
+const { authMiddleware } = require('@an_average_coder/auth_package');
+require('dotenv').config();
+
+const app = express();
+
+app.use(express.json());
+app.use('/auth', authSystem);
+
+app.get('/protected', authMiddleware, (req, res) => {
+    res.send('This is a protected route');
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+
+```
+
 ### Testing
 
 To run tests, use the following command:
@@ -84,4 +123,4 @@ To run tests, use the following command:
 
 ## Changelog
 
-- All notable changes to this project are documented in [Changelog]('./CHANGELOG.md').
+- All notable changes to this project are documented in [Changelog](./CHANGELOG.md).

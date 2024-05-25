@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const schemaConfig = require("./schemaConfig.json");
+const schemaConfig = require("./configs.json");
+const config = require("./config");
+const jwt = require("jsonwebtoken");
 
 const SALT_ROUNDS = schemaConfig.saltRounds;
 
@@ -20,6 +22,10 @@ const createUserSchema = (config) => {
       schemaDefinition[field].default = eval(fieldConfig.default);
     }
   });
+  schemaDefinition.refreshToken = {
+    type: String,
+    required: false,
+  };
   return new mongoose.Schema(schemaDefinition);
 };
 
@@ -36,9 +42,40 @@ userSchema.pre("save", async function (next) {
     } catch (error) {
       next(error);
     }
-  } else {
-    next();
   }
+
+  if (
+    user.isModified("firstName") ||
+    user.isModified("lastName") ||
+    user.isModified("middleName")
+  ) {
+    user.name = `${user.firstName}${
+      user.middleName ? " " + user.middleName + " " : " "
+    }${user.lastName}`;
+  }
+
+  next();
 });
 
-module.exports = mongoose.model("User", userSchema);
+// Method to generate JWT access token
+userSchema.methods.generateAccessToken = function () {
+  const user = this;
+  const payload = { id: user._id, username: user.username };
+  return jwt.sign(payload, config.accessTokenSecret, {
+    expiresIn: config.accessTokenExpiry,
+  });
+};
+userSchema.methods.generateRefreshToken = async function () {
+  const user = this;
+  const payload = { id: user._id };
+  const refreshToken = jwt.sign(payload, config.refreshTokenSecret, {
+    expiresIn: config.refreshTokenExpiry,
+  });
+  user.refreshToken = refreshToken;
+  await user.save();
+  return refreshToken;
+};
+
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;
