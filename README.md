@@ -20,22 +20,54 @@ npm install @an_average_coder/auth_package
 
 ```bash
 {
-    "userSchema": {
-        "username": { "type": "String", "required": true },
-        "password": { "type": "String", "required": true },
-        "email": { "type": "String", "required": false },
-        "age": { "type": "Number", "required": false },
-        "createdAt": { "type": "Date", "default": "Date.now" }
+  "userSchema": {
+    "firstName": {
+      "type": "String",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 50
     },
-
-    "saltRounds": 10,
-
-    "cookieConfig": {
-        "httpOnly": true,
-        "secure": false,
-        "maxAge": "1000 * 60 * 60 * 24 * 7"
+    "middleName": {
+      "type": "String",
+      "required": false,
+      "minLength": 1,
+      "maxLength": 50
+    },
+    "lastName": {
+      "type": "String",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 50
+    },
+    "email": {
+      "type": "String",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 50
+    },
+    "password": {
+      "type": "String",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 50
+    },
+    "username": {
+      "type": "String",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 50
+    },
+    "name": {
+      "type": "String",
+      "required": false,
+      "minLength": 1,
+      "maxLength": 50
     }
-
+  },
+  "saltRound": 10,
+  "cookieConfig": {
+    "httpOnly": true
+  }
 }
 ```
 

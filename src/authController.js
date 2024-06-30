@@ -20,7 +20,9 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { username, password } = req.body;
-    const user = await User.findOne({ username });
+    let user = await User.findOne({ username });
+    if (!user) user = await User.findOne({ email: username });
+    if (!user) user = await User.findOne({ phone: username });
     if (!user) {
       ApiResponse.error(res, "User not found", 404, []);
     }
@@ -30,13 +32,26 @@ const login = async (req, res) => {
     }
     const accessToken = await user.generateAccessToken();
     const refreshToken = await user.generateRefreshToken();
-    res.cookie("accessToken", accessToken, { ...configs.cookieConfig });
-    res.cookie("refreshToken", refreshToken, { ...configs.cookieConfig });
+    res.cookie("accessToken", accessToken, {
+      ...configs.cookieConfig,
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+    });
+    res.cookie("refreshToken", refreshToken, {
+      ...configs.cookieConfig,
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+    });
     ApiResponse.success(res, user, "Logged in successfully", 200);
   } catch (error) {
-    ApiResponse.error(res, error.message || "Internal Server Error", 500, [
-      error,
-    ]);
+    ApiResponse.error(
+      res,
+      error.message || "Internal Server Error",
+      500,
+      error
+    );
   }
 };
 
